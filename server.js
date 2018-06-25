@@ -35,7 +35,7 @@ var blockchain_freeze = setInterval(function() {
     function(error, response, body) {
       var block_header = body;
       if (!error && response.statusCode == 200) {
-        if (last_block !== null && last_block !== block_header) {
+        if (last_block !== null && last_block === block_header) {
           console.log('blockchain is frozen! ' + body);
           _POST(
             'https://hooks.slack.com/services/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',
