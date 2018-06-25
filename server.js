@@ -1,5 +1,27 @@
 var express = require('express');
+var request = require('request');
 var app = express();
+
+var base_URL = 'https://api.eos.bitspace.no/v1/chain/';
+
+var blockchain_freeze = setInterval(function() {
+  request(
+    {
+      url: base_URL + 'get_info',
+      method: 'GET',
+      timeout: 10000,
+      followRedirect: true,
+      maxRedirects: 10
+    },
+    function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log('success!' + body);
+      } else {
+        console.log('error' + response.statusCode);
+      }
+    }
+  );
+}, 60000);
 
 // set the port of our application
 // process.env.PORT lets the port be set by Heroku
